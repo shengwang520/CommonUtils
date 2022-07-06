@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
@@ -45,12 +46,19 @@ object UiCompat {
      */
     fun setMarginTopViewParams(activity: Activity, view: View) {
         val params = view.layoutParams
-        if (params is CollapsingToolbarLayout.LayoutParams) {
-            params.topMargin = getStatusBarHeight(activity)
-        } else if (params is RelativeLayout.LayoutParams) {
-            params.topMargin = getStatusBarHeight(activity)
-        } else if (params is LinearLayout.LayoutParams) {
-            params.topMargin = getStatusBarHeight(activity)
+        when (params) {
+            is CollapsingToolbarLayout.LayoutParams -> {
+                params.topMargin = getStatusBarHeight(activity)
+            }
+            is RelativeLayout.LayoutParams -> {
+                params.topMargin = getStatusBarHeight(activity)
+            }
+            is LinearLayout.LayoutParams -> {
+                params.topMargin = getStatusBarHeight(activity)
+            }
+            is ConstraintLayout.LayoutParams -> {
+                params.topMargin = getStatusBarHeight(activity)
+            }
         }
         view.layoutParams = params
     }

@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.03'
+* api 'com.github.shengwang520:CommonUtils:1.0.05'
 
 ## Changelog
+
+### Version 1.0.05
+
+* 优化顶部代码
 
 ### Version 1.0.04
 
