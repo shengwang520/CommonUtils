@@ -14,21 +14,25 @@ object AppCompat {
     /**
      * 跳转界面
      */
-    fun startActivity(context: Context, intent: Intent) {
-        ActivityCompat.startActivity(context, intent, null)
+    fun startActivity(context: Context?, intent: Intent) {
+        if (context != null) {
+            ActivityCompat.startActivity(context, intent, null)
+        }
     }
 
     /**
      * 跳转界面
      */
-    fun startActivities(context: Context, vararg intent: Intent) {
-        ActivityCompat.startActivities(context, intent, null)
+    fun startActivities(context: Context?, vararg intent: Intent) {
+        if (context != null) {
+            ActivityCompat.startActivities(context, intent, null)
+        }
     }
 
     /**
      * 启动界面
      */
-    fun startActivity(context: Context, intent: Intent, requestCode: Int) {
+    fun startActivity(context: Context?, intent: Intent, requestCode: Int) {
         if (context is Activity) {
             startActivity(context, intent, requestCode)
         } else {
@@ -39,8 +43,10 @@ object AppCompat {
     /**
      * 启动界面
      */
-    fun startActivity(activity: Activity, intent: Intent, requestCode: Int) {
-        ActivityCompat.startActivityForResult(activity, intent, requestCode, null)
+    fun startActivity(activity: Activity?, intent: Intent, requestCode: Int) {
+        if (activity != null) {
+            ActivityCompat.startActivityForResult(activity, intent, requestCode, null)
+        }
     }
 
 
@@ -48,7 +54,7 @@ object AppCompat {
      * 启动界面-共享元素动画
      * @param transitionName 共享元素
      */
-    fun startActivity(context: Context, view: View, intent: Intent, transitionName: String) {
+    fun startActivity(context: Context?, view: View, intent: Intent, transitionName: String) {
         if (context is Activity) {
             val option = ActivityOptionsCompat.makeSceneTransitionAnimation(context, view, transitionName)
             ActivityCompat.startActivity(context, intent, option.toBundle())
@@ -60,7 +66,9 @@ object AppCompat {
     /**
      * 关闭界面
      */
-    fun finishActivity(activity: Activity) {
-        ActivityCompat.finishAfterTransition(activity)
+    fun finishActivity(activity: Activity?) {
+        if (activity != null) {
+            ActivityCompat.finishAfterTransition(activity)
+        }
     }
 }
