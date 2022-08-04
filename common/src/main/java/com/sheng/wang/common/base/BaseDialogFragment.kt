@@ -17,8 +17,8 @@ abstract class BaseDialogFragment : DialogFragment() {
         return createView(inflater, container)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         initWindow()
         initView()
         initListener()

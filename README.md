@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.06'
+* api 'com.github.shengwang520:CommonUtils:1.0.07'
 
 ## Changelog
+
+### Version 1.0.07
+
+* 修复DialogFragment宽度问题
 
 ### Version 1.0.06
 
