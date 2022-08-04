@@ -71,4 +71,15 @@ object AppCompat {
             ActivityCompat.finishAfterTransition(activity)
         }
     }
+
+    /**
+     * 判断activity是否存在
+     */
+    fun <T> isActivityExist(context: Context?, activityClass: Class<T>): Boolean {
+        val intent = Intent(context, activityClass)
+        if (context?.packageManager?.resolveActivity(intent, 0) != null) {
+            return true
+        }
+        return false
+    }
 }

@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.05'
+* api 'com.github.shengwang520:CommonUtils:1.0.06'
 
 ## Changelog
+
+### Version 1.0.06
+
+* 新增判断activity是否存在
+* DialogFragment新增方法
 
 ### Version 1.0.05
 

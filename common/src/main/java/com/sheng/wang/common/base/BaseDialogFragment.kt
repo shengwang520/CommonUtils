@@ -17,10 +17,12 @@ abstract class BaseDialogFragment : DialogFragment() {
         return createView(inflater, container)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         initWindow()
         initView()
+        initListener()
+        initViewModel()
     }
 
     /**
@@ -44,7 +46,16 @@ abstract class BaseDialogFragment : DialogFragment() {
     /**
      * 初始化布局
      */
-    protected open fun initView() {
-    }
+    protected open fun initView() {}
+
+    /**
+     * 初始化事件
+     */
+    protected open fun initListener() {}
+
+    /**
+     * 初始化viewModel
+     */
+    protected open fun initViewModel() {}
 
 }
