@@ -5,7 +5,7 @@ import androidx.multidex.MultiDexApplication
 /**
  * 基础application
  */
-class BassApplication : MultiDexApplication() {
+abstract class BassApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
