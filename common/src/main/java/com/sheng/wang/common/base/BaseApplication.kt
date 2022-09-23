@@ -5,7 +5,7 @@ import androidx.multidex.MultiDexApplication
 /**
  * 基础application
  */
-abstract class BassApplication : MultiDexApplication() {
+abstract class BaseApplication : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
@@ -13,7 +13,7 @@ abstract class BassApplication : MultiDexApplication() {
     }
 
     companion object {
-        var instance: BassApplication? = null
+        var instance: BaseApplication? = null
             private set
     }
 }
