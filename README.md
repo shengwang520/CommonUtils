@@ -14,6 +14,10 @@
 
 ## Changelog
 
+### Version 1.0.08
+
+* 新增基础BaseApplication
+
 ### Version 1.0.07
 
 * 修复DialogFragment宽度问题
