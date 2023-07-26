@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.10'
+* api 'com.github.shengwang520:CommonUtils:1.0.11'
 
 ## Changelog
+
+### Version 1.0.11
+
+* 新增权限请求库
+* 新增BaseFragment事件方法
 
 ### Version 1.0.10
 
