@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.11'
+* api 'com.github.shengwang520:CommonUtils:1.0.12'
 
 ## Changelog
+
+### Version 1.0.12
+
+* 新增设备信息工具类
 
 ### Version 1.0.11
 
