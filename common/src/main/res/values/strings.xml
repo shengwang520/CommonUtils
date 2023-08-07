@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="c_permission_setting">Go settings</string>
+    <string name="c_permission_title">Permission Application Tips</string>
+    <string name="c_permission_msg">You must obtain the relevant permissions to use the function!</string>
+</resources>

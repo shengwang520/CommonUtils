@@ -9,7 +9,10 @@ import android.os.Build
 import android.provider.Settings
 import androidx.core.app.ActivityCompat
 import com.karumi.dexter.Dexter
+import com.karumi.dexter.listener.multi.DialogOnAnyDeniedMultiplePermissionsListener
 import com.karumi.dexter.listener.single.CompositePermissionListener
+import com.karumi.dexter.listener.single.DialogOnDeniedPermissionListener
+import com.sheng.wang.common.R
 
 /**
  * android 6.0+ 权限管理工具
@@ -40,7 +43,7 @@ object DexterPermissionsUtil {
         }
         Dexter.withContext(context)
             .withPermission(permission)
-            .withListener(CompositePermissionListener(SamplePermissionListener(callBack)))
+            .withListener(CompositePermissionListener(SamplePermissionListener(callBack), createDialogPermissionListener(context)))
             .withErrorListener {
                 callBack?.showPermissionError(it.toString())
             }
@@ -61,11 +64,37 @@ object DexterPermissionsUtil {
 
         Dexter.withContext(context)
             .withPermissions(*permissions)
-            .withListener(SampleMultiplePermissionListener(callBack))
+            .withListener(SampleMultiplePermissionListener(callBack, createDialogMultiplePermissionListener(context)))
             .withErrorListener {
                 callBack?.showPermissionError(it.toString())
             }
             .check()
+    }
+
+    /**
+     * 创建拒绝弹出提示
+     */
+    private fun createDialogPermissionListener(context: Context?): DialogOnDeniedPermissionListener {
+        return DialogOnDeniedPermissionListener.Builder.withContext(context)
+            .withTitle(R.string.c_permission_title)
+            .withMessage(R.string.c_permission_msg)
+            .withButtonText(R.string.c_permission_setting) {
+                go2OpenPermission(context)
+            }
+            .build()
+    }
+
+    /**
+     * 创建拒绝弹出提示
+     */
+    private fun createDialogMultiplePermissionListener(context: Context?): DialogOnAnyDeniedMultiplePermissionsListener {
+        return DialogOnAnyDeniedMultiplePermissionsListener.Builder.withContext(context)
+            .withTitle(R.string.c_permission_title)
+            .withMessage(R.string.c_permission_msg)
+            .withButtonText(R.string.c_permission_setting) {
+                go2OpenPermission(context)
+            }
+            .build()
     }
 
     /**
@@ -91,7 +120,7 @@ object DexterPermissionsUtil {
     /**
      * 取设置开启权限
      */
-    fun go2OpenPermission(context: Context?) {
+    private fun go2OpenPermission(context: Context?) {
         val myAppSettings = Intent(
             Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
             Uri.parse("package:" + context?.packageName)

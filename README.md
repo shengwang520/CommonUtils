@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.13'
+* api 'com.github.shengwang520:CommonUtils:1.0.14'
 
 ## Changelog
+
+### Version 1.0.14
+
+* 新增权限拒绝，弹出去设置界面进行开启弹窗
 
 ### Version 1.0.13
 
