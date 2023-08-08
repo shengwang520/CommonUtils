@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.14'
+* api 'com.github.shengwang520:CommonUtils:1.0.15'
 
 ## Changelog
+
+### Version 1.0.15
+
+* 新增安卓10+文件转换处理
 
 ### Version 1.0.14
 
