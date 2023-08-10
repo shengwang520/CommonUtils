@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.15'
+* api 'com.github.shengwang520:CommonUtils:1.0.16'
 
 ## Changelog
+
+### Version 1.0.16
+
+* 新增ViewPager2灵敏度修改方法
 
 ### Version 1.0.15
 
