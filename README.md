@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.16'
+* api 'com.github.shengwang520:CommonUtils:1.0.17'
 
 ## Changelog
+
+### Version 1.0.17
+
+* 新增TabLayout长按屏蔽方法
+* 调整相关包引入权限
 
 ### Version 1.0.16
 
