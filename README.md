@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.17'
+* api 'com.github.shengwang520:CommonUtils:1.0.18'
 
 ## Changelog
+
+### Version 1.0.18
+
+* 新增多个字符串内容数据颜色和大小变化
 
 ### Version 1.0.17
 

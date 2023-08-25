@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.drawable.Drawable
 import android.text.*
 import android.text.Html.ImageGetter
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
@@ -50,6 +51,27 @@ object StringUtil {
                     )
                 }
                 stringBuilder.append(spannableString)
+            }
+        }
+        return stringBuilder
+    }
+
+    /**
+     * 设置文字颜色，大小变化
+     * @param text 完整内容
+     * @param content 需要变化的内容
+     * @param color 需要变化的颜色
+     * @param size 需要变化的大小
+     */
+    fun getStringAndColor(text: String?, content: List<String>?, color: String, size: Int): SpannableStringBuilder {
+        val stringBuilder = SpannableStringBuilder(text)
+        if (content?.isNotEmpty() == true) {
+            for (str in content) {
+                val index = text?.indexOf(str) ?: 0
+                val colorSpan = ForegroundColorSpan(Color.parseColor(color))
+                stringBuilder.setSpan(colorSpan, index, index + str.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                val sizeSpan = AbsoluteSizeSpan(size, true)
+                stringBuilder.setSpan(sizeSpan, index, index + str.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
             }
         }
         return stringBuilder
