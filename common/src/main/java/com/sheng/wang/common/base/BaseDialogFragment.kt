@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 
 /**
  * dialog 基类
@@ -58,4 +59,20 @@ abstract class BaseDialogFragment : DialogFragment() {
      */
     protected open fun initViewModel() {}
 
+
+    override fun showNow(manager: FragmentManager, tag: String?) {
+        try {
+            super.showNow(manager, tag)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun dismiss() {
+        try {
+            super.dismiss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }

@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.18'
+* api 'com.github.shengwang520:CommonUtils:1.0.19'
 
 ## Changelog
+
+### Version 1.0.19
+
+* 新增Banner布局
+* 修复DialogFragment显示和隐藏偶现崩溃
 
 ### Version 1.0.18
 
