@@ -72,6 +72,13 @@ class BannerViewPager @JvmOverloads constructor(context: Context, attrs: Attribu
         if (radioButtons.isNotEmpty()) {
             radioButtons[0].isChecked = true
         }
+
+        if (count > 1) {
+            radioGroup?.visibility = VISIBLE
+        } else {
+            radioGroup?.visibility = GONE
+        }
+
         startCountdownTimer()
     }
 

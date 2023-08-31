@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.19'
+* api 'com.github.shengwang520:CommonUtils:1.0.20'
 
 ## Changelog
+
+### Version 1.0.20
+
+* 新增Banner布局，在数据为1时，隐藏指示器
 
 ### Version 1.0.19
 
