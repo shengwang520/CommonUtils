@@ -14,6 +14,10 @@
 
 ## Changelog
 
+### Version 1.0.21
+
+* 调整引入库权限
+
 ### Version 1.0.20
 
 * 新增Banner布局，在数据为1时，隐藏指示器
