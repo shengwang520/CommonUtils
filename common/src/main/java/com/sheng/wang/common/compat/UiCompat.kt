@@ -18,9 +18,9 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
  */
 object UiCompat {
     /**
-     * 图片全屏透明状态栏（图片位于状态栏下面）,在setContentView前调用
+     * 沉浸式状态栏,在setContentView前调用
      */
-    fun setImageTransparent(activity: Activity) {
+    fun transparentStatusBar(activity: Activity) {
         //去掉半透明的可能性
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         //可以设置系统栏的背景色
@@ -150,7 +150,7 @@ object UiCompat {
         } else {
             if (hasNotchInScreen(activity)) {
                 activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-                setImageTransparent(activity)
+                transparentStatusBar(activity)
             }
         }
     }
