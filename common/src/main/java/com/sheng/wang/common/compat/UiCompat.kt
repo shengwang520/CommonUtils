@@ -2,6 +2,7 @@ package com.sheng.wang.common.compat
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.text.TextUtils
 import android.view.View
@@ -10,7 +11,6 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 /**
@@ -18,11 +18,15 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
  */
 object UiCompat {
     /**
-     * 图片全屏透明状态栏（图片位于状态栏下面）
+     * 图片全屏透明状态栏（图片位于状态栏下面）,在setContentView前调用
      */
     fun setImageTransparent(activity: Activity) {
+        //去掉半透明的可能性
+        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        //可以设置系统栏的背景色
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+        activity.window.statusBarColor = Color.TRANSPARENT
         activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        activity.window.statusBarColor = ContextCompat.getColor(activity, android.R.color.transparent)
     }
 
     /**
@@ -50,12 +54,15 @@ object UiCompat {
             is CollapsingToolbarLayout.LayoutParams -> {
                 params.topMargin = getStatusBarHeight(activity)
             }
+
             is RelativeLayout.LayoutParams -> {
                 params.topMargin = getStatusBarHeight(activity)
             }
+
             is LinearLayout.LayoutParams -> {
                 params.topMargin = getStatusBarHeight(activity)
             }
+
             is ConstraintLayout.LayoutParams -> {
                 params.topMargin = getStatusBarHeight(activity)
             }

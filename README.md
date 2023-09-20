@@ -10,9 +10,11 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.20'
+* api 'com.github.shengwang520:CommonUtils:1.0.22'
 
 ## Changelog
+
+* 优化沉浸式状态栏实现
 
 ### Version 1.0.21
 
