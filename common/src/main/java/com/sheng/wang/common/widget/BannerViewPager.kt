@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.CountDownTimer
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -148,6 +149,24 @@ class BannerViewPager @JvmOverloads constructor(context: Context, attrs: Attribu
         super.onDetachedFromWindow()
         this.removeOnPageChangeListener(onPageChangeListener)
         stopCountdownTimer()
+    }
+
+    override fun onTouchEvent(ev: MotionEvent?): Boolean {
+        try {
+            return super.onTouchEvent(ev)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
+    }
+
+    override fun onInterceptTouchEvent(ev: MotionEvent?): Boolean {
+        try {
+            return super.onInterceptTouchEvent(ev)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return false
     }
 
     /**

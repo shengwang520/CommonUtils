@@ -10,9 +10,15 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.22'
+* api 'com.github.shengwang520:CommonUtils:1.0.23'
 
 ## Changelog
+
+### version 1.0.23
+
+* 修复BannerViewPager实现多点触控崩溃问题
+
+### Version 1.0.22
 
 * 优化沉浸式状态栏实现
 
