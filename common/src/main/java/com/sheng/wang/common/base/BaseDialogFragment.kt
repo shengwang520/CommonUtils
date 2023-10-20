@@ -59,6 +59,20 @@ abstract class BaseDialogFragment : DialogFragment() {
      */
     protected open fun initViewModel() {}
 
+    /**
+     * 显示唯一布局
+     * @param isOnly 是否显示唯一
+     */
+    open fun showNowOnly(manager: FragmentManager, tag: String?, isOnly: Boolean = true) {
+        if (isOnly) {
+            val fragment = manager.findFragmentByTag(tag)
+            if (fragment == null || !fragment.isVisible) {
+                showNow(manager, tag)
+            }
+        } else {
+            showNow(manager, tag)
+        }
+    }
 
     override fun showNow(manager: FragmentManager, tag: String?) {
         try {

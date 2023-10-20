@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.23'
+* api 'com.github.shengwang520:CommonUtils:1.0.24'
 
 ## Changelog
+
+### Version 1.0.24
+
+* 新增DialogFragment显示唯一弹窗
 
 ### version 1.0.23
 
