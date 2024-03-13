@@ -1,18 +1,21 @@
 package com.sheng.wang.common.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.*
-import android.text.Html.ImageGetter
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextPaint
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.view.View
-import androidx.core.content.res.ResourcesCompat
 
 /**
  * 字符串拼接
@@ -25,7 +28,7 @@ object StringUtil {
         val stringBuilder = SpannableStringBuilder()
         for (textString in textStrings) {
             if (textString.icon > 0) {
-                stringBuilder.append(getImageSpan(context, textString.icon))
+                stringBuilder.append(getImageSpan(context, textString.icon, textString.iconWith, textString.iconHeight))
             } else {
                 val spannableString = SpannableString(textString.text)
                 if (textString.onClickListener != null) {
@@ -80,22 +83,14 @@ object StringUtil {
     /**
      * 获取图片标签
      */
-    private fun getImageSpan(context: Context, resId: Int): SpannableString {
-        val hotSpan = Html.fromHtml("<img src='$resId'/> ", ImageGetter { source ->
-            if (!TextUtils.isEmpty(source)) {
-                val id = source.toInt()
-                //根据id从资源文件中获取图片对象
-                val d = ResourcesCompat.getDrawable(
-                    context.resources, id, null
-                )
-                d?.setBounds(0, 0, d.intrinsicWidth, d.intrinsicHeight)
-                return@ImageGetter d!!
-            }
-            null
-        }, null)
-        val spannableString = SpannableString(hotSpan)
-        val imageSpan = CenterAlignImageSpan(context, resId)
-        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
+    private fun getImageSpan(context: Context, resId: Int, iconWith: Int = 0, iconHeight: Int = 0): SpannableString {
+        val spannableString = SpannableString("0")
+        var bitmap = BitmapFactory.decodeResource(context.resources, resId)
+        if (iconWith != 0 && iconHeight != 0) {
+            bitmap = Bitmap.createScaledBitmap(bitmap, iconWith, iconHeight, true)
+        }
+        val imageSpan = CenterAlignImageSpan(context, bitmap)
+        spannableString.setSpan(imageSpan, 0, 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         return spannableString
     }
 
@@ -110,8 +105,13 @@ object StringUtil {
          */
         var isLineText: Boolean = false
 
-        constructor(icon: Int) {
+        var iconWith = 0
+        var iconHeight = 0
+
+        constructor(icon: Int, iconWith: Int = 0, iconHeight: Int = 0) {
             this.icon = icon
+            this.iconWith = iconWith
+            this.iconHeight = iconHeight
         }
 
         @JvmOverloads
@@ -129,9 +129,7 @@ object StringUtil {
     /**
      * 图片居中
      */
-    class CenterAlignImageSpan : ImageSpan {
-        constructor(drawable: Drawable) : super(drawable)
-        constructor(context: Context, resourceId: Int) : super(context, resourceId)
+    class CenterAlignImageSpan(context: Context, bitmap: Bitmap) : ImageSpan(context, bitmap) {
 
         override fun draw(
             canvas: Canvas, text: CharSequence, start: Int, end: Int, x: Float, top: Int, y: Int, bottom: Int, paint: Paint

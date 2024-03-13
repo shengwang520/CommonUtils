@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.24'
+* api 'com.github.shengwang520:CommonUtils:1.0.25'
 
 ## Changelog
+
+### Version 1.0.25
+
+* 优化富文本显示图片逻辑，新增可传入图片大小
 
 ### Version 1.0.24
 
