@@ -108,6 +108,10 @@ object StringUtil {
         var iconWith = 0
         var iconHeight = 0
 
+        constructor(icon: Int) {
+            this.icon = icon
+        }
+
         constructor(icon: Int, iconWith: Int = 0, iconHeight: Int = 0) {
             this.icon = icon
             this.iconWith = iconWith
