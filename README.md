@@ -10,13 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.26'
+* api 'com.github.shengwang520:CommonUtils:1.0.28'
 
 ## Changelog
 
-### Version 1.0.26
+### Version 1.0.28
 
-* 升级编译版本为8.0+，适配安卓14+
+* 升级编译版本为8.0+，适配安卓14+ jdk17
 
 ### Version 1.0.25
 
