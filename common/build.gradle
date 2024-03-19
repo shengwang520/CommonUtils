@@ -11,7 +11,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.shengwang520'
                 artifactId = 'CommonUtils'
-                version = "1.0.25"
+                version = "1.0.29"
             }
         }
     }
@@ -24,8 +24,8 @@ android {
     defaultConfig {
         minSdk 21
         targetSdk 34
-        versionCode 26
-        versionName "1.0.26"
+        versionCode 29
+        versionName "1.0.29"
     }
 
     compileOptions {

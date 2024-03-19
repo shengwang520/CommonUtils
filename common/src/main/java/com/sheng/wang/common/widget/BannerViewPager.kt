@@ -84,6 +84,29 @@ class BannerViewPager @JvmOverloads constructor(context: Context, attrs: Attribu
     }
 
     /**
+     * 绑定radioGroup
+     * @param radioButton 自定义radioButton
+     * @suppress 需要先调用
+     * @see setupWithAdapter
+     */
+    fun setupWithRadioGroup(radioGroup: RadioGroup?, radioButton: List<RadioButton>) {
+        this.radioGroup = radioGroup
+        this.radioButtons.clear()
+        this.radioButtons.addAll(radioButton)
+        if (radioButtons.isNotEmpty()) {
+            radioButtons[0].isChecked = true
+        }
+
+        if (count > 1) {
+            radioGroup?.visibility = VISIBLE
+        } else {
+            radioGroup?.visibility = GONE
+        }
+
+        startCountdownTimer()
+    }
+
+    /**
      * 动态创建按钮
      */
     private fun createButtons(

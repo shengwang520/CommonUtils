@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.0.28'
+* api 'com.github.shengwang520:CommonUtils:1.0.29'
 
 ## Changelog
+
+### Version 1.0.29
+
+* 新增自动滚动banner view自定义指示器
 
 ### Version 1.0.28
 
