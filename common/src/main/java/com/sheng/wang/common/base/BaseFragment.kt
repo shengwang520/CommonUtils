@@ -17,6 +17,7 @@ abstract class BaseFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         initView()
+        initListener()
         initViewModel()
     }
 
@@ -29,6 +30,11 @@ abstract class BaseFragment : Fragment() {
      * 继承BaseFragment的碎片必须要实现的方法, 实现业务逻辑
      */
     protected abstract fun initView()
+
+    /**
+     * 初始化事件
+     */
+    protected open fun initListener() {}
 
     /**
      * 初始化viewModel

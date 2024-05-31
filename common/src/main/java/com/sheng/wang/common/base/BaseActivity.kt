@@ -2,9 +2,15 @@ package com.sheng.wang.common.base
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import com.sheng.wang.common.permission.appSettingsWindowLauncher
+import com.sheng.wang.common.permission.onPermissionDenied
+import com.sheng.wang.common.permission.onPermissionGranted
+import com.sheng.wang.common.permission.registerPermissionLaunch
+import com.sheng.wang.common.permission.registerPermissionsLaunch
 
 /**
  * Activity 基类
@@ -18,8 +24,33 @@ abstract class BaseActivity : AppCompatActivity() {
     val activity: BaseActivity
         get() = this
 
+    /**
+     * 申请单个权限
+     */
+    val permissionLauncher = registerPermissionLaunch({ onPermissionGranted?.invoke() }, { onPermissionDenied?.invoke() })
+
+    /**
+     * 申请多个权限
+     */
+    val permissionsLauncher = registerPermissionsLaunch({ onPermissionGranted?.invoke() }, { onPermissionDenied?.invoke() })
+
+    /**
+     * 申请悬浮窗权限
+     */
+    val permissionWindowLauncher = appSettingsWindowLauncher()
+
+    /**
+     * 返回键代理
+     */
+    private val backDispatcher by lazy {
+        onBackPressedDispatcher
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        registerBackDispatcher {
+            onBackDispatcher()
+        }
         initBindingView()
         initView()
         initListener()
@@ -61,10 +92,31 @@ abstract class BaseActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 注册返回键触发回掉
+     * @param bloc 返回true 表示拦截 false不拦截
+     */
+    private fun registerBackDispatcher(bloc: () -> Boolean) {
+        backDispatcher.addCallback(this) {
+            if (!bloc()) {
+                finish()
+            }
+        }
+    }
+
+    /**
+     * 返回键拦截
+     * @return true拦截返回键 false不拦截
+     */
+    open fun onBackDispatcher(): Boolean {
+        return false
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            onBackPressed()
+            if (!onBackDispatcher()) {
+                finish()
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -74,18 +126,17 @@ abstract class BaseActivity : AppCompatActivity() {
      * fragment 切换显示
      * @param tag 标志
      */
-    @JvmOverloads
     fun switchFragment(containerViewId: Int, targetFragment: Fragment?, tag: String? = null) {
         if (targetFragment == null) return
         val transaction = supportFragmentManager.beginTransaction()
         if (!targetFragment.isAdded && supportFragmentManager.findFragmentByTag(tag) == null) {
-            if (currentFragment != null) {
-                transaction.hide(currentFragment!!)
+            currentFragment?.let {
+                transaction.hide(it)
             }
             transaction.add(containerViewId, targetFragment, tag).commitNow()
         } else {
-            if (currentFragment != null) {
-                transaction.hide(currentFragment!!)
+            currentFragment?.let {
+                transaction.hide(it)
             }
             transaction.show(targetFragment).commitNow()
         }
