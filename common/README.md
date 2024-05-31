@@ -10,11 +10,11 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.00'
+* api 'com.github.shengwang520:CommonUtils:1.1.01'
 
 ## Changelog
 
-### Version 1.1.00
+### Version 1.1.01
 
 * 代码结构优化，采用Ktx实现
 * 新增基于BaseActivity权限请求框架
