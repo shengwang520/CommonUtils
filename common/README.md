@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.01'
+* api 'com.github.shengwang520:CommonUtils:1.1.02'
 
 ## Changelog
+
+### Version 1.1.02
+
+* 新增判断是否拥有权限方法
+* 新增权限拒绝后可自信实现拦截逻辑
 
 ### Version 1.1.01
 

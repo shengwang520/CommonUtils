@@ -6,7 +6,6 @@ import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import com.sheng.wang.common.permission.appSettingsWindowLauncher
 import com.sheng.wang.common.permission.onPermissionDenied
 import com.sheng.wang.common.permission.onPermissionGranted
 import com.sheng.wang.common.permission.registerPermissionLaunch
@@ -33,11 +32,6 @@ abstract class BaseActivity : AppCompatActivity() {
      * 申请多个权限
      */
     val permissionsLauncher = registerPermissionsLaunch({ onPermissionGranted?.invoke() }, { onPermissionDenied?.invoke() })
-
-    /**
-     * 申请悬浮窗权限
-     */
-    val permissionWindowLauncher = appSettingsWindowLauncher()
 
     /**
      * 返回键代理

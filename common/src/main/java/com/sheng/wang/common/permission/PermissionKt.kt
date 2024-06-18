@@ -3,14 +3,15 @@ package com.sheng.wang.common.permission
 import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
@@ -71,9 +72,9 @@ val POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 var onPermissionGranted: (() -> Unit)? = null
 
 /**
- * 权限拒绝统一回调
+ * 权限拒绝统一回调-返回true表示自己实现拦截后的逻辑，false使用默认实现
  */
-var onPermissionDenied: (() -> Unit)? = null
+var onPermissionDenied: (() -> Boolean)? = null
 
 
 /**
@@ -85,7 +86,7 @@ var onPermissionDenied: (() -> Unit)? = null
 fun Context?.requestPermission(
     permission: String?,
     onGranted: () -> Unit,
-    onDenied: (() -> Unit)? = null
+    onDenied: (() -> Boolean)? = null
 ) {
     this?.let {
         if (it is BaseActivity) {
@@ -105,7 +106,7 @@ fun Context?.requestPermission(
 fun Context?.requestPermissions(
     permissions: Array<String>?,
     onGranted: () -> Unit,
-    onDenied: (() -> Unit)? = null
+    onDenied: (() -> Boolean)? = null
 ) {
     this?.let {
         if (it is BaseActivity) {
@@ -123,21 +124,21 @@ fun Context?.requestPermissions(
  */
 fun ActivityResultCaller.registerPermissionLaunch(
     onGranted: () -> Unit,
-    onDenied: (() -> Unit)? = null
+    onDenied: (() -> Boolean?)? = null
 ): ActivityResultLauncher<String> {
     val context = if (this is FragmentActivity) this else (this as? Fragment)?.activity
-    val appSettingsLauncher = appSettingsLauncher()
     return registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
         if (result) {
             onGranted()
         } else {
-            context?.let {
-                Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.c_permission_setting) {
-                        appSettingsLauncher.launch(null)
-                    }.show()
+            if (onDenied?.invoke() == false) {
+                context?.let {
+                    Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.c_permission_setting) {
+                            context.startSettingPermission()
+                        }.show()
+                }
             }
-            onDenied?.invoke()
         }
     }
 }
@@ -149,53 +150,25 @@ fun ActivityResultCaller.registerPermissionLaunch(
  */
 fun ActivityResultCaller.registerPermissionsLaunch(
     onGranted: () -> Unit,
-    onDenied: (() -> Unit)? = null
+    onDenied: (() -> Boolean?)? = null
 ): ActivityResultLauncher<Array<String>> {
     val context = if (this is FragmentActivity) this else (this as? Fragment)?.activity
-    val appSettingsLauncher = appSettingsLauncher()
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultMap ->
         if (resultMap.containsValue(false)) {
-            context?.let {
-                Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.c_permission_setting) {
-                        appSettingsLauncher.launch(null)
-                    }.show()
+            if (onDenied?.invoke() == false) {
+                context?.let {
+                    Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.c_permission_setting) {
+                            context.startSettingPermission()
+                        }.show()
+                }
             }
-            onDenied?.invoke()
         } else {
             onGranted()
         }
     }
 }
 
-/**
- * 跳转应用设置页的Launcher
- */
-private fun ActivityResultCaller.appSettingsLauncher() = registerForActivityResult(LaunchAppSettingsContract()) {}
-
-/**
- * 跳转设置页的协定
- */
-private class LaunchAppSettingsContract : ActivityResultContract<Unit?, Unit>() {
-
-    override fun createIntent(context: Context, input: Unit?): Intent {
-        return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            .setData(Uri.fromParts("package", context.packageName, null))
-    }
-
-    override fun parseResult(resultCode: Int, intent: Intent?) = Unit
-}
-
-/**
- * 申请悬浮窗权限-基于BaseActivity实现
- */
-fun Context?.requestWindowPermission() {
-    this?.let {
-        if (it is BaseActivity) {
-            it.permissionWindowLauncher.launch(null)
-        }
-    }
-}
 
 /**
  * 判断是否有悬浮窗权限
@@ -209,24 +182,47 @@ fun Context?.isWindowPermission(): Boolean {
 }
 
 /**
- * 跳转应用设置页的Launcher-悬浮窗
+ * 检查是否拥有权限
+ * @param permission 需要判断的权限
+ * @return true有 ，false没有
  */
-fun ActivityResultCaller.appSettingsWindowLauncher() = registerForActivityResult(LaunchAppSettingsWindowContract()) {}
+fun Context?.isCheckPermission(permission: String): Boolean {
+    this?.let {
+        return ContextCompat.checkSelfPermission(it, permission) == PackageManager.PERMISSION_GRANTED
+    }
+    return false
+}
 
 /**
- * 跳转设置页的协定-悬浮窗权限
+ * 启动手机app权限设置界面
  */
-private class LaunchAppSettingsWindowContract : ActivityResultContract<Unit?, Unit>() {
+fun Context?.startSettingPermission() {
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        .setData(Uri.fromParts("package", this?.packageName, null))
+    this?.startActivity(intent)
+}
 
-    override fun createIntent(context: Context, input: Unit?): Intent {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
-                .setData(Uri.fromParts("package", context.packageName, null))
-        } else {
-            return Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                .setData(Uri.fromParts("package", context.packageName, null))
-        }
+/**
+ * 启动手机app悬浮窗权限设置界面
+ */
+fun Context?.startSettingWindow() {
+    val intent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
+            .setData(Uri.fromParts("package", this?.packageName, null))
+    } else {
+        Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+            .setData(Uri.fromParts("package", this?.packageName, null))
     }
+    this?.startActivity(intent)
+}
 
-    override fun parseResult(resultCode: Int, intent: Intent?) = Unit
+/**
+ * 启动手机设置wifi
+ */
+fun Context?.startSettingWifi() {
+    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+        this?.startActivity(Intent(Settings.Panel.ACTION_WIFI))
+    } else {
+        this?.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
+    }
 }
