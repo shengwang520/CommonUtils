@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
-import com.orhanobut.logger.Logger
 import com.sheng.wang.common.R
 import com.sheng.wang.common.base.BaseActivity
 

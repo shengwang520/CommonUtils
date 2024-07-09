@@ -10,11 +10,11 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.05'
+* api 'com.github.shengwang520:CommonUtils:1.1.04'
 
 ## Changelog
 
-### Version 1.1.05
+### Version 1.1.04
 
 * 新增权限拒绝后自动显示去设置界面重新申请
 
