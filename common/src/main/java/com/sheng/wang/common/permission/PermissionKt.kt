@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
+import com.orhanobut.logger.Logger
 import com.sheng.wang.common.R
 import com.sheng.wang.common.base.BaseActivity
 
@@ -131,12 +132,9 @@ fun ActivityResultCaller.registerPermissionLaunch(
         if (result) {
             onGranted()
         } else {
-            if (onDenied?.invoke() == false) {
-                context?.let {
-                    Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.c_permission_setting) {
-                            context.startSettingPermission()
-                        }.show()
+            onDenied?.invoke().let {
+                if (it == null || it == false) {
+                    context.showDeniedView()
                 }
             }
         }
@@ -155,17 +153,26 @@ fun ActivityResultCaller.registerPermissionsLaunch(
     val context = if (this is FragmentActivity) this else (this as? Fragment)?.activity
     return registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { resultMap ->
         if (resultMap.containsValue(false)) {
-            if (onDenied?.invoke() == false) {
-                context?.let {
-                    Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.c_permission_setting) {
-                            context.startSettingPermission()
-                        }.show()
+            onDenied?.invoke().let {
+                if (it == null || it == false) {
+                    context.showDeniedView()
                 }
             }
         } else {
             onGranted()
         }
+    }
+}
+
+/**
+ * 显示权限被拒绝弹窗
+ */
+private fun FragmentActivity?.showDeniedView() {
+    this?.let {
+        Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
+            .setAction(R.string.c_permission_setting) {
+                this.startSettingPermission()
+            }.show()
     }
 }
 
