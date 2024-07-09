@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.02'
+* api 'com.github.shengwang520:CommonUtils:1.1.03'
 
 ## Changelog
+
+### Version 1.1.03
+
+* 新增单个文字反显，提供点击事件
 
 ### Version 1.1.02
 

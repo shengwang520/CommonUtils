@@ -81,6 +81,48 @@ object StringUtil {
     }
 
     /**
+     * 设置文字颜色，大小变化,点击事件
+     * @param text 完整内容
+     * @param content 需要变化的内容
+     * @param color 需要变化的颜色
+     * @param size 需要变化的大小
+     * @param onClickText 给变化的颜色添加点击效果
+     */
+    fun getStringAndColor(
+        text: String?,
+        content: String?,
+        color: String,
+        size: Int = 0,
+        onClickText: (() -> Unit)? = null
+    ): SpannableStringBuilder {
+        val stringBuilder = SpannableStringBuilder(text)
+        if (!content.isNullOrEmpty()) {
+            val index = text?.indexOf(content) ?: 0
+            val colorSpan = ForegroundColorSpan(Color.parseColor(color))
+            stringBuilder.setSpan(colorSpan, index, index + content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            if (size > 0) {
+                val sizeSpan = AbsoluteSizeSpan(size, true)
+                stringBuilder.setSpan(sizeSpan, index, index + content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+            if (onClickText != null) {
+                val clickSpan = object : ClickableSpan() {
+                    override fun onClick(widget: View) {
+                        onClickText()
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        ds.color = Color.parseColor(color)
+                        ds.isUnderlineText = false
+                    }
+                }
+                stringBuilder.setSpan(clickSpan, index, index + content.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            }
+        }
+        return stringBuilder
+    }
+
+    /**
      * 获取图片标签
      */
     private fun getImageSpan(context: Context, resId: Int, iconWith: Int = 0, iconHeight: Int = 0): SpannableString {
