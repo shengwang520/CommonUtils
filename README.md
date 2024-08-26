@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.04'
+* api 'com.github.shengwang520:CommonUtils:1.1.05'
 
 ## Changelog
+
+### Version 1.1.05
+
+* 新增bannerView生命周期绑定方法
+* 新增文本添加画部分文字圆角背景
 
 ### Version 1.1.04
 

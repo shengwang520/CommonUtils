@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 
@@ -190,6 +192,28 @@ class BannerViewPager @JvmOverloads constructor(context: Context, attrs: Attribu
             e.printStackTrace()
         }
         return false
+    }
+
+    /**
+     * 绑定页面声明周期，自动处理滚动逻辑
+     */
+    fun bindLifecycleObserver(owner: LifecycleOwner?) {
+        owner?.lifecycle?.addObserver(object : DefaultLifecycleObserver {
+            override fun onStart(owner: LifecycleOwner) {
+                super.onStart(owner)
+                resume()
+            }
+
+            override fun onStop(owner: LifecycleOwner) {
+                super.onStop(owner)
+                pause()
+            }
+
+            override fun onDestroy(owner: LifecycleOwner) {
+                super.onDestroy(owner)
+                pause()
+            }
+        })
     }
 
     /**

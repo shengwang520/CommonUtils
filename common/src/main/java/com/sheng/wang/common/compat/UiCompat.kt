@@ -19,14 +19,16 @@ import com.google.android.material.appbar.CollapsingToolbarLayout
 object UiCompat {
     /**
      * 沉浸式状态栏,在setContentView前调用
+     * @param dark 状态栏颜色是否为黑色 true黑色 false白色
      */
-    fun transparentStatusBar(activity: Activity) {
+    fun transparentStatusBar(activity: Activity, dark: Boolean = true) {
         //去掉半透明的可能性
         activity.window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
         //可以设置系统栏的背景色
         activity.window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         activity.window.statusBarColor = Color.TRANSPARENT
         activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+        setAndroidNativeLightStatusBar(activity, dark)
     }
 
     /**
