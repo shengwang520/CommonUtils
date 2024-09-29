@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sheng.wang.common.R
 import com.sheng.wang.common.base.BaseActivity
+import java.lang.ref.WeakReference
 
 /**
  * 相机权限
@@ -69,12 +70,12 @@ val POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 /**
  * 权限同意统一回调
  */
-var onPermissionGranted: (() -> Unit)? = null
+var onPermissionGranted:WeakReference< (() -> Unit)>? = null
 
 /**
  * 权限拒绝统一回调-返回true表示自己实现拦截后的逻辑，false使用默认实现
  */
-var onPermissionDenied: (() -> Boolean)? = null
+var onPermissionDenied: WeakReference<(() -> Boolean)>? = null
 
 
 /**
@@ -90,8 +91,8 @@ fun Context?.requestPermission(
 ) {
     this?.let {
         if (it is BaseActivity) {
-            onPermissionGranted = onGranted
-            onPermissionDenied = onDenied
+            onPermissionGranted = WeakReference(onGranted)
+            onPermissionDenied = WeakReference(onDenied)
             it.permissionLauncher.launch(permission)
         }
     }
@@ -110,8 +111,8 @@ fun Context?.requestPermissions(
 ) {
     this?.let {
         if (it is BaseActivity) {
-            onPermissionGranted = onGranted
-            onPermissionDenied = onDenied
+            onPermissionGranted = WeakReference(onGranted)
+            onPermissionDenied = WeakReference(onDenied)
             it.permissionsLauncher.launch(permissions)
         }
     }

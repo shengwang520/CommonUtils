@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.05'
+* api 'com.github.shengwang520:CommonUtils:1.1.06'
 
 ## Changelog
+
+### Version 1.1.06
+
+* 修复权限库偶现内存泄露
 
 ### Version 1.1.05
 

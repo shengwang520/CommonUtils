@@ -26,12 +26,12 @@ abstract class BaseActivity : AppCompatActivity() {
     /**
      * 申请单个权限
      */
-    val permissionLauncher = registerPermissionLaunch({ onPermissionGranted?.invoke() }, { onPermissionDenied?.invoke() })
+    val permissionLauncher = registerPermissionLaunch({ onPermissionGranted?.get()?.invoke() }, { onPermissionDenied?.get()?.invoke() })
 
     /**
      * 申请多个权限
      */
-    val permissionsLauncher = registerPermissionsLaunch({ onPermissionGranted?.invoke() }, { onPermissionDenied?.invoke() })
+    val permissionsLauncher = registerPermissionsLaunch({ onPermissionGranted?.get()?.invoke() }, { onPermissionDenied?.get()?.invoke() })
 
     /**
      * 返回键代理
