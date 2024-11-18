@@ -14,8 +14,8 @@ abstract class BaseFragment : Fragment() {
         return createView(inflater, container)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initView()
         initListener()
         initViewModel()

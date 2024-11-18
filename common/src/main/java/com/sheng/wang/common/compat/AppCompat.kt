@@ -77,9 +77,6 @@ object AppCompat {
      */
     fun <T> isActivityExist(context: Context?, activityClass: Class<T>): Boolean {
         val intent = Intent(context, activityClass)
-        if (context?.packageManager?.resolveActivity(intent, 0) != null) {
-            return true
-        }
-        return false
+        return context?.packageManager?.resolveActivity(intent, 0) != null
     }
 }

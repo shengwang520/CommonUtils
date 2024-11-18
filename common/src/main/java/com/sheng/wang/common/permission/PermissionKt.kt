@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import android.view.View
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -70,7 +71,7 @@ val POST_NOTIFICATIONS = Manifest.permission.POST_NOTIFICATIONS
 /**
  * 权限同意统一回调
  */
-var onPermissionGranted:WeakReference< (() -> Unit)>? = null
+var onPermissionGranted: WeakReference<(() -> Unit)>? = null
 
 /**
  * 权限拒绝统一回调-返回true表示自己实现拦截后的逻辑，false使用默认实现
@@ -169,7 +170,8 @@ fun ActivityResultCaller.registerPermissionsLaunch(
  */
 private fun FragmentActivity?.showDeniedView() {
     this?.let {
-        Snackbar.make(it.window.decorView, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
+        val view = it.findViewById<View>(android.R.id.content)
+        Snackbar.make(view, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
             .setAction(R.string.c_permission_setting) {
                 this.startSettingPermission()
             }.show()

@@ -21,6 +21,7 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     private var mGravity = Gravity.START
     private var isResetWidth = false //是否需要重新设置宽度
     private var dividerId = 0 //分割线
+    private var beginning = true//分割线是否显示在开始
     private var sizeNum: Int //每行按照多少数量计算
     var selectorHolder: BaseViewItemHolder<T>? = null
     private var mOnViewSelectedListener: OnViewSelectedListener? = null
@@ -57,8 +58,9 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
     /**
      * 设置分割线
      */
-    fun setDividerId(dividerId: Int) {
+    fun setDividerId(dividerId: Int, beginning: Boolean = true) {
         this.dividerId = dividerId
+        this.beginning = beginning
     }
 
     /**
@@ -99,11 +101,12 @@ abstract class BaseGroupAdapter<T> @JvmOverloads protected constructor(
                     itemParent.gravity = mGravity
                     if (dividerId > 0) {
                         itemParent.dividerDrawable = ContextCompat.getDrawable(mContext, dividerId)
-                        itemParent.showDividers = LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING
+                        itemParent.showDividers = if (beginning) (LinearLayout.SHOW_DIVIDER_MIDDLE or LinearLayout.SHOW_DIVIDER_BEGINNING)
+                        else LinearLayout.SHOW_DIVIDER_MIDDLE
                     }
                     val itemNum = mNum + i
                     var j = i
-                    val num = Math.min(itemNum, size)
+                    val num = itemNum.coerceAtMost(size)
                     while (j < num) {
                         val holder = onCreateViewHolder(mViewGroup)
                         onBindViewHolder(holder, j)

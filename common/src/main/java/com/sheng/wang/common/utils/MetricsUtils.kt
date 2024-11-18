@@ -39,14 +39,6 @@ object MetricsUtils {
     }
 
     /**
-     * sp转px的方法。
-     */
-    fun sp2px(context: Context, spValue: Float): Int {
-        val fontScale = context.resources.displayMetrics.scaledDensity
-        return (spValue * fontScale).toInt()
-    }
-
-    /**
      * 获取控件的高度
      *
      * @param width 宽度

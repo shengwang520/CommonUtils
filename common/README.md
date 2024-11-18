@@ -10,9 +10,14 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.06'
+* api 'com.github.shengwang520:CommonUtils:1.1.07'
 
 ## Changelog
+
+### Version 1.1.07
+
+* 新增安卓15+适配通用工具
+* 优化权限拒绝弹窗显示位置
 
 ### Version 1.1.06
 
