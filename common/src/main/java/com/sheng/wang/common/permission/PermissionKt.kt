@@ -18,6 +18,7 @@ import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.sheng.wang.common.R
 import com.sheng.wang.common.base.BaseActivity
+import com.sheng.wang.common.helper.getNavigationBarHeight
 import java.lang.ref.WeakReference
 
 /**
@@ -174,6 +175,8 @@ private fun FragmentActivity?.showDeniedView() {
         Snackbar.make(view, R.string.c_permission_msg, Snackbar.LENGTH_LONG)
             .setAction(R.string.c_permission_setting) {
                 this.startSettingPermission()
+            }.apply {
+                this.view.setPadding(0, 0, 0, it.getNavigationBarHeight())
             }.show()
     }
 }

@@ -51,3 +51,14 @@ fun FragmentActivity.getSystemBarsHeight(bloc: (Int, Int) -> Unit) {
         insets
     }
 }
+
+/**
+ * 获取导航栏高度
+ */
+fun FragmentActivity.getNavigationBarHeight(): Int {
+    ViewCompat.getRootWindowInsets(window.decorView)?.let {
+        val navigationBar = it.getInsets(Type.navigationBars()).bottom
+        return navigationBar
+    }
+    return 0
+}
