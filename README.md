@@ -10,9 +10,13 @@
 
 ## Step 2. Add the dependency
 
-* api 'com.github.shengwang520:CommonUtils:1.1.07'
+* api 'com.github.shengwang520:CommonUtils:1.1.08'
 
 ## Changelog
+
+### Version 1.1.08
+
+* 优化权限拒绝提示显示位置适配
 
 ### Version 1.1.07
 
